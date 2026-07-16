@@ -1,887 +1,854 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Guru Vignesh B — Data Analyst Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg: #0d0f14; --surface: #13161d; --card: #181c25;
-      --accent: #651fe7; --accent2: #154de6;
-      --text: #e8eaf0; --muted: #7a8099;
-      --border: rgba(33, 46, 225, 0.12);
-    }
-    html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text); font-family: 'Lora', serif; line-height: 1.7; overflow-x: hidden; }
-    body::before {
-      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: .4;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    }
-    body::after {
-      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
-      background-image: linear-gradient(rgba(200,241,53,0.03) 1px,transparent 1px), linear-gradient(90deg,rgba(200,241,53,0.03) 1px,transparent 1px);
-      background-size: 60px 60px;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="description" content="Guru Vignesh B — Data Analyst portfolio. Power BI, SQL, Python and credit risk analytics." />
+<title>Guru Vignesh B — Data Analyst Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  :root{
+    /* ── Ledger / bureau palette — deep ink navy, bureau gold, verified teal ── */
+    --bg:#0a0e16;
+    --surface:#0d1320;
+    --card:#121a28;
+    --card-hover:#161f30;
+    --gold:#c9a227;
+    --gold-soft:rgba(201,162,39,.12);
+    --teal:#3fa796;
+    --rust:#c1573c;
+    --text:#eef0f2;
+    --muted:#8b93a7;
+    --muted-dim:#5c6478;
+    --border:rgba(201,162,39,.14);
+    --border-soft:rgba(255,255,255,.06);
+    --radius:10px;
+  }
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:'Inter',sans-serif; line-height:1.7;
+    overflow-x:hidden; -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:''; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.5;
+    background-image:linear-gradient(rgba(201,162,39,0.035) 1px,transparent 1px),linear-gradient(90deg,rgba(201,162,39,0.035) 1px,transparent 1px);
+    background-size:44px 44px;
+  }
+  ::selection{ background:var(--gold); color:#0a0e16; }
+  a{ color:inherit; }
+  img{ max-width:100%; display:block; }
+  .tnum{ font-variant-numeric:tabular-nums; }
 
-    /* ═══════════════════════════════════
-       ENTRANCE LOADER
-    ═══════════════════════════════════ */
-    #pg-loader {
-      position: fixed; inset: 0; z-index: 9999;
-      background: #0d0f14;
-      display: flex; align-items: center; justify-content: center;
-      flex-direction: column;
-      transition: opacity 0.85s cubic-bezier(0.77,0,0.18,1), visibility 0.85s ease;
-    }
-    #pg-loader.done { opacity: 0; visibility: hidden; pointer-events: none; }
+  /* ═══════════ ENTRANCE LOADER — credit score gauge ═══════════ */
+  #pg-loader{
+    position:fixed; inset:0; z-index:9999; background:var(--bg);
+    display:flex; align-items:center; justify-content:center; flex-direction:column;
+    transition:opacity .75s cubic-bezier(.77,0,.18,1), visibility .75s ease;
+  }
+  #pg-loader.done{ opacity:0; visibility:hidden; pointer-events:none; }
+  .loader-lines{ position:absolute; inset:0; overflow:hidden; pointer-events:none; opacity:.5; }
+  .loader-line{ position:absolute; height:1px; left:0; right:0; background:rgba(201,162,39,.05); }
+  .loader-line-v{ position:absolute; width:1px; top:0; bottom:0; background:rgba(201,162,39,.05); }
+  .loader-corner{ position:absolute; width:16px; height:16px; border-color:rgba(201,162,39,.4); border-style:solid; }
+  .c-tl{ top:22px; left:22px; border-width:1px 0 0 1px; } .c-tr{ top:22px; right:22px; border-width:1px 1px 0 0; }
+  .c-bl{ bottom:22px; left:22px; border-width:0 0 1px 1px; } .c-br{ bottom:22px; right:22px; border-width:0 1px 1px 0; }
 
-    .loader-cursor {
-      position: fixed; width: 16px; height: 16px; border-radius: 50%;
-      background: rgba(101,31,231,0.15);
-      border: 1.5px solid rgba(101,31,231,0.55);
-      pointer-events: none; z-index: 10000;
-      transform: translate(-50%,-50%);
-      transition: left 0.07s ease, top 0.07s ease;
-    }
-    .loader-cursor-glow {
-      position: fixed; width: 80px; height: 80px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(101,31,231,0.14) 0%, transparent 70%);
-      pointer-events: none; z-index: 9998;
-      transform: translate(-50%,-50%);
-      transition: left 0.25s ease, top 0.25s ease;
-    }
+  .loader-inner{ display:flex; flex-direction:column; align-items:center; gap:6px; position:relative; z-index:2; }
+  .loader-eyebrow{
+    font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.32em; text-transform:uppercase;
+    color:var(--muted-dim); margin-bottom:18px;
+  }
+  .gauge-wrap{ position:relative; width:min(300px,72vw); }
+  .gauge-wrap svg{ width:100%; height:auto; display:block; }
+  .gauge-track{ fill:none; stroke:rgba(255,255,255,.07); stroke-width:10; stroke-linecap:round; }
+  .gauge-fill{ fill:none; stroke:url(#gaugeGrad); stroke-width:10; stroke-linecap:round; stroke-dasharray:100; stroke-dashoffset:100; transition:stroke-dashoffset .05s linear; }
+  .gauge-needle{ transform-origin:110px 118px; transition:transform .05s linear; }
+  .gauge-readout{ position:absolute; left:50%; bottom:6px; transform:translateX(-50%); text-align:center; width:100%; }
+  .gauge-score{ font-family:'Fraunces',serif; font-size:clamp(2.6rem,9vw,3.4rem); font-weight:700; color:#fff; letter-spacing:-1px; line-height:1; }
+  .gauge-band{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); margin-top:2px; min-height:14px; }
+  .loader-status{
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--muted); margin-top:22px; min-height:14px; text-align:center;
+  }
+  .loader-status::before{ content:'· '; color:var(--gold); }
 
-    .loader-corner { position: absolute; width: 18px; height: 18px; border-color: rgba(101,31,231,0.4); border-style: solid; }
-    .c-tl { top: 22px; left: 22px; border-width: 1px 0 0 1px; }
-    .c-tr { top: 22px; right: 22px; border-width: 1px 1px 0 0; }
-    .c-bl { bottom: 22px; left: 22px; border-width: 0 0 1px 1px; }
-    .c-br { bottom: 22px; right: 22px; border-width: 0 1px 1px 0; }
+  /* ═══════════ PAGE REVEAL ═══════════ */
+  #page-content{ opacity:0; transition:opacity .8s ease .05s; }
+  #page-content.revealed{ opacity:1; }
 
-    .loader-lines { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
-    .loader-line   { position: absolute; height: 1px; background: rgba(101,31,231,0.05); left: 0; right: 0; }
-    .loader-line-v { position: absolute; width: 1px;  background: rgba(101,31,231,0.05); top: 0; bottom: 0; }
+  /* ═══════════ CURSOR ═══════════ */
+  .site-cursor{ position:fixed; width:8px; height:8px; border-radius:50%; background:var(--gold); pointer-events:none; z-index:9000; transform:translate(-50%,-50%); transition:left .06s ease,top .06s ease,transform .2s ease,opacity .3s; opacity:0; }
+  .site-cursor-ring{ position:fixed; width:32px; height:32px; border-radius:50%; border:1px solid rgba(201,162,39,.4); pointer-events:none; z-index:8999; transform:translate(-50%,-50%); transition:left .16s ease,top .16s ease,width .25s,height .25s,opacity .3s; opacity:0; }
+  .site-cursor.active,.site-cursor-ring.active{ opacity:1; }
+  @media(hover:none){ .site-cursor,.site-cursor-ring{ display:none; } }
 
-    .loader-scan { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-    .loader-scan::after {
-      content: ''; position: absolute; left: 0; right: 0; height: 130px;
-      background: linear-gradient(to bottom, transparent, rgba(101,31,231,0.04), transparent);
-      animation: scanMove 2.4s linear infinite;
-    }
-    @keyframes scanMove { 0% { top: -130px; } 100% { top: 100%; } }
+  /* ═══════════ NAV ═══════════ */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:1.1rem 5%; background:rgba(10,14,22,.82); backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border-soft);
+  }
+  .nav-logo{ font-family:'Fraunces',serif; font-weight:700; font-size:1.15rem; letter-spacing:-.3px; color:var(--text); }
+  .nav-logo span{ color:var(--gold); }
+  .nav-links{ display:flex; gap:2rem; list-style:none; }
+  .nav-links a{ font-family:'IBM Plex Mono',monospace; font-size:.72rem; color:var(--muted); text-decoration:none; letter-spacing:.08em; text-transform:uppercase; transition:color .2s; }
+  .nav-links a:hover{ color:var(--gold); }
+  .hamburger{ display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; padding:6px; z-index:101; }
+  .hamburger span{ display:block; width:22px; height:1.5px; background:var(--gold); transition:.3s; }
+  .hamburger.open span:nth-child(1){ transform:translateY(6.5px) rotate(45deg); }
+  .hamburger.open span:nth-child(2){ opacity:0; }
+  .hamburger.open span:nth-child(3){ transform:translateY(-6.5px) rotate(-45deg); }
 
-    .loader-inner { display: flex; flex-direction: column; align-items: center; gap: 26px; }
+  section{ position:relative; z-index:1; }
 
-    .loader-name {
-      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 800;
-      letter-spacing: 0.38em; text-transform: uppercase;
-      color: rgba(255,255,255,0.15);
-    }
+  /* ═══════════ HERO ═══════════ */
+  #hero{ min-height:100vh; display:flex; align-items:center; padding:8rem 5% 5rem; }
+  .hero-inner{ max-width:880px; }
+  .hero-tag{
+    font-family:'IBM Plex Mono',monospace; font-size:.72rem; color:var(--gold); letter-spacing:.16em; text-transform:uppercase;
+    margin-bottom:1.5rem; display:inline-flex; align-items:center; gap:.6rem; border:1px solid var(--border); border-radius:20px; padding:.4rem 1rem;
+  }
+  .hero-tag::before{ content:''; width:6px; height:6px; border-radius:50%; background:var(--teal); box-shadow:0 0 8px var(--teal); }
+  .hero-name{ font-family:'Fraunces',serif; font-size:clamp(2.7rem,9vw,6rem); font-weight:700; line-height:1; letter-spacing:-2px; margin-bottom:1.1rem; }
+  .hero-name .highlight{ color:var(--gold); font-style:italic; font-weight:500; display:block; }
+  .hero-subtitle{ font-family:'IBM Plex Mono',monospace; font-size:clamp(.85rem,2vw,1rem); font-weight:500; color:var(--muted); letter-spacing:.04em; margin-bottom:1.6rem; text-transform:uppercase; }
+  .hero-bio{ max-width:560px; color:var(--muted); font-size:1.02rem; margin-bottom:2.4rem; }
+  .hero-cta{ display:flex; flex-wrap:wrap; gap:1rem; align-items:center; }
+  .btn{ font-family:'IBM Plex Mono',monospace; font-size:.76rem; letter-spacing:.06em; text-transform:uppercase; padding:.85rem 1.8rem; border-radius:4px; text-decoration:none; transition:.25s; cursor:pointer; border:none; display:inline-flex; align-items:center; gap:.5rem; }
+  .btn-primary{ background:var(--gold); color:#0a0e16; font-weight:600; }
+  .btn-primary:hover{ background:#e0b530; transform:translateY(-2px); box-shadow:0 10px 30px rgba(201,162,39,.22); }
+  .btn-outline{ border:1px solid var(--border-soft); color:var(--text); background:transparent; }
+  .btn-outline:hover{ border-color:var(--gold); color:var(--gold); transform:translateY(-2px); }
+  .btn-resume{ border:1px solid rgba(63,167,150,.35); color:var(--teal); background:rgba(63,167,150,.06); }
+  .btn-resume:hover{ border-color:var(--teal); background:rgba(63,167,150,.14); transform:translateY(-2px); }
+  .btn-resume svg{ width:14px; height:14px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .hero-scroll{ position:absolute; bottom:2rem; left:5%; display:flex; align-items:center; gap:.8rem; font-family:'IBM Plex Mono',monospace; font-size:.68rem; color:var(--muted-dim); letter-spacing:.1em; text-transform:uppercase; }
+  .scroll-line{ width:34px; height:1px; background:var(--muted-dim); animation:scrollPulse 2s ease-in-out infinite; }
+  @keyframes scrollPulse{ 0%,100%{opacity:.4} 50%{opacity:1} }
+  @media(max-width:600px){ .hero-scroll{ display:none; } }
 
-    .loader-percent {
-      font-family: 'DM Mono', monospace;
-      font-size: 76px; font-weight: 400;
-      color: #fff; letter-spacing: -4px; line-height: 1;
-    }
-    .loader-percent sup { font-size: 24px; vertical-align: super; color: #651fe7; letter-spacing: 0; }
+  /* ═══════════ SECTION HEADERS ═══════════ */
+  .section-header{ margin-bottom:3.2rem; }
+  .section-label{ font-family:'IBM Plex Mono',monospace; font-size:.7rem; color:var(--gold); letter-spacing:.16em; text-transform:uppercase; margin-bottom:.7rem; display:flex; align-items:center; gap:.6rem; }
+  .section-label::after{ content:''; flex:1; height:1px; background:var(--border-soft); max-width:80px; }
+  .section-title{ font-family:'Fraunces',serif; font-size:clamp(1.7rem,4vw,2.6rem); font-weight:600; letter-spacing:-1px; line-height:1.1; }
 
-    .loader-bar-wrap {
-      width: 280px; height: 1px;
-      background: rgba(255,255,255,0.06);
-      border-radius: 2px; overflow: visible; position: relative;
-    }
-    .loader-bar-fill {
-      height: 100%; width: 0%;
-      background: linear-gradient(90deg, #651fe7, #154de6);
-      border-radius: 2px; position: relative;
-      transition: width 0.04s linear;
-    }
-    .loader-bar-fill::after {
-      content: ''; position: absolute; right: -1px; top: -3px;
-      width: 2px; height: 7px; border-radius: 2px;
-      background: #fff;
-      box-shadow: 0 0 10px 4px rgba(101,31,231,0.85);
-    }
+  /* ═══════════ SKILLS ═══════════ */
+  #skills{ padding:6rem 5%; background:var(--surface); border-top:1px solid var(--border-soft); border-bottom:1px solid var(--border-soft); }
+  .skills-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:1rem; }
+  .skill-category{ background:var(--card); border:1px solid var(--border-soft); border-radius:var(--radius); padding:1.6rem; transition:border-color .25s,transform .25s; }
+  .skill-category:hover{ border-color:var(--border); transform:translateY(-4px); }
+  .skill-cat-title{ font-family:'IBM Plex Mono',monospace; font-size:.68rem; color:var(--gold); letter-spacing:.12em; text-transform:uppercase; margin-bottom:1rem; }
+  .skill-tags{ display:flex; flex-wrap:wrap; gap:.5rem; }
+  .skill-tag{ font-family:'IBM Plex Mono',monospace; font-size:.7rem; background:var(--gold-soft); color:var(--text); border:1px solid var(--border); border-radius:3px; padding:.32rem .7rem; transition:background .2s; }
+  .skill-tag:hover{ background:rgba(201,162,39,.2); }
 
-    .loader-status {
-      font-family: 'DM Mono', monospace; font-size: 9px;
-      letter-spacing: 0.22em; text-transform: uppercase;
-      color: rgba(255,255,255,0.2); min-height: 13px;
-    }
+  /* ═══════════ EXPERIENCE ═══════════ */
+  #experience{ padding:6rem 5%; }
+  .timeline{ position:relative; max-width:800px; }
+  .timeline::before{ content:''; position:absolute; left:0; top:6px; bottom:6px; width:1px; background:var(--border-soft); }
+  .timeline-item{ padding-left:2.4rem; position:relative; margin-bottom:3rem; opacity:0; transform:translateX(-16px); animation:fadeSlideIn .6s forwards; }
+  .timeline-item:nth-child(1){ animation-delay:.1s } .timeline-item:nth-child(2){ animation-delay:.25s }
+  @keyframes fadeSlideIn{ to{opacity:1;transform:none} }
+  .timeline-dot{ position:absolute; left:-4px; top:6px; width:9px; height:9px; border-radius:50%; background:var(--gold); box-shadow:0 0 12px rgba(201,162,39,.5); }
+  .exp-header{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:.5rem; margin-bottom:.4rem; }
+  .exp-role{ font-family:'Fraunces',serif; font-weight:600; font-size:1.15rem; }
+  .exp-period{ font-family:'IBM Plex Mono',monospace; font-size:.7rem; color:var(--gold); background:var(--gold-soft); border:1px solid var(--border); border-radius:3px; padding:.25rem .7rem; display:flex; align-items:center; white-space:nowrap; }
+  .exp-company{ font-family:'IBM Plex Mono',monospace; font-size:.78rem; color:var(--muted); margin-bottom:1rem; }
+  .exp-points{ list-style:none; }
+  .exp-points li{ font-size:.94rem; color:var(--muted); margin-bottom:.5rem; padding-left:1.15rem; position:relative; }
+  .exp-points li::before{ content:'→'; position:absolute; left:0; color:var(--teal); font-size:.8rem; }
+  .exp-tools{ margin-top:1rem; display:flex; flex-wrap:wrap; gap:.4rem; }
+  .tool-chip{ font-family:'IBM Plex Mono',monospace; font-size:.66rem; background:rgba(63,167,150,.08); color:var(--teal); border:1px solid rgba(63,167,150,.2); border-radius:3px; padding:.2rem .6rem; }
 
-    /* ═══════════════════════════════════
-       PAGE CONTENT
-    ═══════════════════════════════════ */
-    #page-content { opacity: 0; transition: opacity 0.9s ease 0.1s; }
-    #page-content.revealed { opacity: 1; }
+  /* ═══════════ PROJECTS ═══════════ */
+  #projects{ padding:6rem 5%; background:var(--surface); border-top:1px solid var(--border-soft); border-bottom:1px solid var(--border-soft); }
+  .projects-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:1.8rem; }
+  .project-card{ background:var(--card); border:1px solid var(--border-soft); border-radius:var(--radius); overflow:hidden; position:relative; transition:border-color .25s,transform .3s,box-shadow .3s; }
+  .project-card::before{ content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--gold),var(--teal)); transform:scaleX(0); transform-origin:left; transition:transform .4s; z-index:2; }
+  .project-card:hover::before{ transform:scaleX(1); }
+  .project-card:hover{ border-color:var(--border); transform:translateY(-5px); box-shadow:0 22px 50px rgba(0,0,0,.4); }
 
-    /* ═══════════════════════════════════
-       SITE CURSOR
-    ═══════════════════════════════════ */
-    .site-cursor {
-      position: fixed; width: 10px; height: 10px; border-radius: 50%;
-      background: var(--accent); pointer-events: none; z-index: 9000;
-      transform: translate(-50%,-50%);
-      transition: left 0.06s ease, top 0.06s ease, transform 0.2s ease, opacity 0.3s;
-      opacity: 0; mix-blend-mode: screen;
-    }
-    .site-cursor-ring {
-      position: fixed; width: 36px; height: 36px; border-radius: 50%;
-      border: 1px solid rgba(101,31,231,0.45);
-      pointer-events: none; z-index: 8999;
-      transform: translate(-50%,-50%);
-      transition: left 0.18s ease, top 0.18s ease, width 0.25s, height 0.25s, opacity 0.3s;
-      opacity: 0;
-    }
-    .site-cursor.active { opacity: 1; }
-    .site-cursor-ring.active { opacity: 1; }
+  .carousel-wrapper{ position:relative; width:100%; aspect-ratio:16/9; overflow:hidden; background:#070a10; border-bottom:1px solid var(--border-soft); }
+  .carousel-track{ display:flex; height:100%; transition:transform .55s cubic-bezier(.77,0,.18,1); will-change:transform; cursor:grab; user-select:none; }
+  .carousel-track.dragging{ transition:none; cursor:grabbing; }
+  .carousel-slide{ flex:0 0 100%; height:100%; position:relative; overflow:hidden; }
+  .carousel-slide img{ width:100%; height:100%; object-fit:cover; display:block; transition:transform .6s ease; }
+  .project-card:hover .carousel-slide img{ transform:scale(1.03); }
+  .carousel-btn{ position:absolute; top:50%; transform:translateY(-50%); z-index:10; width:32px; height:32px; border-radius:50%; border:1px solid var(--border); background:rgba(10,12,18,.7); backdrop-filter:blur(8px); color:var(--gold); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .2s,border-color .2s,transform .2s,opacity .3s; opacity:0; }
+  .carousel-wrapper:hover .carousel-btn{ opacity:1; }
+  .carousel-btn:hover{ background:var(--gold-soft); border-color:var(--gold); transform:translateY(-50%) scale(1.1); }
+  .carousel-btn svg{ width:12px; height:12px; stroke:currentColor; fill:none; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; }
+  .carousel-btn.prev{ left:10px; } .carousel-btn.next{ right:10px; }
+  .carousel-dots{ position:absolute; bottom:10px; left:50%; transform:translateX(-50%); display:flex; gap:5px; z-index:10; }
+  .carousel-dot{ width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,.25); border:none; cursor:pointer; padding:0; transition:background .25s,width .3s,border-radius .3s; }
+  .carousel-dot.active{ background:var(--gold); width:18px; border-radius:3px; }
+  .carousel-counter{ position:absolute; top:10px; right:12px; font-family:'IBM Plex Mono',monospace; font-size:.6rem; color:rgba(255,255,255,.6); background:rgba(0,0,0,.5); backdrop-filter:blur(6px); border:1px solid rgba(255,255,255,.08); border-radius:20px; padding:.18rem .55rem; z-index:10; letter-spacing:.05em; }
+  .carousel-progress{ position:absolute; bottom:0; left:0; height:2px; background:linear-gradient(90deg,var(--gold),var(--teal)); z-index:10; width:0%; opacity:.8; }
 
-    /* NAV */
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 5%; background: rgba(13,15,20,0.85); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
-    .nav-logo { font-family: 'Syne',sans-serif; font-weight: 800; font-size: 1.1rem; letter-spacing: -0.5px; color: var(--accent); }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a { font-family: 'DM Mono',monospace; font-size: .78rem; color: var(--muted); text-decoration: none; letter-spacing: .05em; text-transform: uppercase; transition: color .2s; }
-    .nav-links a:hover { color: var(--accent); }
-    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
-    .hamburger span { display: block; width: 24px; height: 2px; background: var(--accent); transition: .3s; }
+  .project-body{ padding:1.5rem 1.7rem 1.8rem; }
+  .project-number{ font-family:'IBM Plex Mono',monospace; font-size:.7rem; letter-spacing:.12em; color:var(--muted-dim); margin-bottom:.5rem; text-transform:uppercase; }
+  .project-title{ font-family:'Fraunces',serif; font-weight:600; font-size:1.12rem; margin-bottom:.7rem; display:flex; align-items:center; flex-wrap:wrap; gap:.6rem; }
+  .project-link{ font-family:'IBM Plex Mono',monospace; font-size:.62rem; letter-spacing:.06em; color:var(--teal); border:1px solid rgba(63,167,150,.3); border-radius:3px; padding:.22rem .55rem; text-decoration:none; text-transform:uppercase; transition:background .2s,border-color .2s; }
+  .project-link:hover{ background:rgba(63,167,150,.1); border-color:var(--teal); }
+  .project-stack{ display:flex; flex-wrap:wrap; gap:.4rem; margin-bottom:1rem; }
+  .stack-badge{ font-family:'IBM Plex Mono',monospace; font-size:.63rem; letter-spacing:.06em; background:var(--gold-soft); color:var(--gold); border:1px solid var(--border); border-radius:2px; padding:.2rem .55rem; text-transform:uppercase; }
+  .project-metrics{ display:flex; flex-wrap:wrap; gap:.6rem; margin-bottom:1rem; }
+  .metric{ text-align:center; background:rgba(255,255,255,.025); border:1px solid var(--border-soft); border-radius:6px; padding:.55rem .7rem; flex:1; min-width:78px; }
+  .metric-value{ font-family:'Fraunces',serif; font-size:1.05rem; font-weight:700; color:var(--gold); display:block; }
+  .metric-value.risk{ color:var(--rust); }
+  .metric-label{ font-family:'IBM Plex Mono',monospace; font-size:.56rem; color:var(--muted); letter-spacing:.05em; text-transform:uppercase; }
+  .project-desc{ list-style:none; font-size:.85rem; color:var(--muted); }
+  .project-desc li{ padding-left:1.05rem; position:relative; margin-bottom:.32rem; }
+  .project-desc li::before{ content:'▸'; position:absolute; left:0; color:var(--teal); font-size:.68rem; }
 
-    section { position: relative; z-index: 1; }
+  /* ═══════════ CERTIFICATIONS ═══════════ */
+  #certifications{ padding:6rem 5%; }
+  .certs-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:1rem; }
+  .cert-card{ background:var(--card); border:1px solid var(--border-soft); border-radius:var(--radius); padding:1.7rem; display:flex; gap:1.1rem; align-items:flex-start; transition:border-color .25s,transform .25s; }
+  .cert-card:hover{ border-color:var(--border); transform:translateY(-3px); }
+  .cert-icon{ width:40px; height:40px; border-radius:8px; background:var(--gold-soft); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .cert-icon svg{ width:18px; height:18px; stroke:var(--gold); fill:none; stroke-width:1.6; }
+  .cert-info h3{ font-family:'Fraunces',serif; font-size:.98rem; font-weight:600; margin-bottom:.3rem; }
+  .cert-period{ font-family:'IBM Plex Mono',monospace; font-size:.68rem; color:var(--teal); text-transform:uppercase; letter-spacing:.04em; }
 
-    /* HERO */
-    #hero { min-height: 100vh; display: flex; align-items: center; padding: 8rem 5% 5rem; }
-    .hero-inner { max-width: 900px; }
-    .hero-tag { font-family: 'DM Mono',monospace; font-size: .75rem; color: var(--accent); letter-spacing: .15em; text-transform: uppercase; margin-bottom: 1.5rem; display: flex; align-items: center; gap: .6rem; }
-    .hero-tag::before { content: ''; display: inline-block; width: 30px; height: 1px; background: var(--accent); }
-    .hero-name { font-family: 'Syne',sans-serif; font-size: clamp(3rem,8vw,6.5rem); font-weight: 800; line-height: .95; letter-spacing: -3px; margin-bottom: 1rem; }
-    .hero-name .highlight { color: var(--accent); display: block; }
-    .hero-subtitle { font-family: 'Syne',sans-serif; font-size: clamp(1rem,2.5vw,1.3rem); font-weight: 600; color: var(--muted); letter-spacing: .02em; margin-bottom: 1.8rem; }
-    .hero-bio { max-width: 560px; color: var(--muted); font-size: 1rem; margin-bottom: 2.5rem; }
-    .hero-cta { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
-    .btn { font-family: 'DM Mono',monospace; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; padding: .85rem 2rem; border-radius: 4px; text-decoration: none; transition: .25s; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: .5rem; }
-    .btn-primary { background: var(--accent); color: #0d0f14; font-weight: 500; }
-    .btn-primary:hover { background: #5b0dd8; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(81,13,208,0.3); }
-    .btn-outline { border: 1px solid var(--border); color: var(--text); background: transparent; }
-    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
-    .btn-resume { border: 1px solid rgba(33,67,219,0.35); color: #651fe7; background: rgba(77,255,195,.05); position: relative; overflow: hidden; }
-    .btn-resume::before { content: ''; position: absolute; inset: 0; background: rgba(30,80,208,0.08); transform: translateX(-100%); transition: transform .3s ease; }
-    .btn-resume:hover::before { transform: translateX(0); }
-    .btn-resume:hover { border-color: var(--accent2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(77,255,195,.15); }
-    .btn-resume svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; position: relative; z-index: 1; }
-    .btn-resume span { position: relative; z-index: 1; }
-    .hero-scroll { position: absolute; bottom: 2rem; left: 5%; display: flex; align-items: center; gap: .8rem; font-family: 'DM Mono',monospace; font-size: .7rem; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; }
-    .scroll-line { width: 40px; height: 1px; background: var(--muted); animation: scrollPulse 2s ease-in-out infinite; }
-    @keyframes scrollPulse { 0%,100%{opacity:.4}50%{opacity:1} }
+  /* ═══════════ EDUCATION ═══════════ */
+  #education{ padding:6rem 5%; background:var(--surface); border-top:1px solid var(--border-soft); border-bottom:1px solid var(--border-soft); }
+  .edu-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:1.1rem; }
+  .edu-card{ background:var(--card); border:1px solid var(--border-soft); border-radius:var(--radius); padding:1.9rem; transition:border-color .25s,transform .25s; }
+  .edu-card:hover{ border-color:var(--border); transform:translateY(-4px); }
+  .edu-degree{ font-family:'Fraunces',serif; font-weight:600; font-size:1rem; margin-bottom:.35rem; }
+  .edu-institution{ font-family:'IBM Plex Mono',monospace; font-size:.76rem; color:var(--muted); margin-bottom:.6rem; }
+  .edu-meta{ display:flex; justify-content:space-between; align-items:center; font-family:'IBM Plex Mono',monospace; font-size:.7rem; }
+  .edu-year{ color:var(--gold); }
+  .edu-gpa{ color:var(--teal); }
 
-    /* SECTION COMMON */
-    .section-header { margin-bottom: 3.5rem; }
-    .section-label { font-family: 'DM Mono',monospace; font-size: .72rem; color: var(--accent); letter-spacing: .15em; text-transform: uppercase; margin-bottom: .8rem; display: flex; align-items: center; gap: .6rem; }
-    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); max-width: 80px; }
-    .section-title { font-family: 'Syne',sans-serif; font-size: clamp(1.8rem,4vw,2.8rem); font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; }
+  /* ═══════════ CONTACT ═══════════ */
+  #contact{ padding:6rem 5% 4rem; }
+  .contact-inner{ display:grid; grid-template-columns:1.1fr .9fr; gap:3rem; max-width:920px; }
+  .contact-text h2{ font-family:'Fraunces',serif; font-size:clamp(1.8rem,4vw,2.4rem); font-weight:600; letter-spacing:-1px; margin-bottom:1rem; line-height:1.15; }
+  .contact-text p{ color:var(--muted); margin-bottom:2rem; max-width:44ch; }
+  .contact-links{ display:flex; flex-direction:column; gap:.7rem; }
+  .contact-link{ display:flex; align-items:center; gap:.8rem; font-family:'IBM Plex Mono',monospace; font-size:.8rem; color:var(--muted); text-decoration:none; transition:color .2s,border-color .2s; padding:.75rem 1rem; border:1px solid var(--border-soft); border-radius:6px; }
+  .contact-link:hover{ color:var(--gold); border-color:var(--border); }
+  .contact-link-icon{ width:30px; height:30px; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+  .contact-link-icon svg{ width:16px; height:16px; stroke:currentColor; fill:none; stroke-width:1.7; }
 
-    /* SKILLS */
-    #skills { padding: 6rem 5%; background: var(--surface); }
-    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 1rem; }
-    .skill-category { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.6rem; transition: border-color .25s,transform .25s; }
-    .skill-category:hover { border-color: rgba(37,63,231,0.35); transform: translateY(-4px); }
-    .skill-cat-title { font-family: 'DM Mono',monospace; font-size: .7rem; color: var(--accent); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 1rem; }
-    .skill-tags { display: flex; flex-wrap: wrap; gap: .5rem; }
-    .skill-tag { font-family: 'DM Mono',monospace; font-size: .72rem; background: rgba(200,241,53,.07); color: var(--text); border: 1px solid rgba(26,55,219,0.15); border-radius: 3px; padding: .3rem .7rem; transition: background .2s; }
-    .skill-tag:hover { background: rgba(200,241,53,.14); }
+  footer{ border-top:1px solid var(--border-soft); padding:1.5rem 5%; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; font-family:'IBM Plex Mono',monospace; font-size:.68rem; color:var(--muted-dim); position:relative; z-index:1; }
 
-    /* EXPERIENCE */
-    #experience { padding: 6rem 5%; }
-    .timeline { position: relative; max-width: 800px; }
-    .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: var(--border); }
-    .timeline-item { padding-left: 2.5rem; position: relative; margin-bottom: 3rem; opacity: 0; transform: translateX(-20px); animation: fadeSlideIn .6s forwards; }
-    .timeline-item:nth-child(1){animation-delay:.1s} .timeline-item:nth-child(2){animation-delay:.25s}
-    @keyframes fadeSlideIn { to{opacity:1;transform:none} }
-    .timeline-dot { position: absolute; left: -5px; top: 6px; width: 11px; height: 11px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 14px rgba(200,241,53,.5); }
-    .exp-header { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem; margin-bottom: .5rem; }
-    .exp-role { font-family: sans-serif; font-weight: 700; font-size: 1.15rem; }
-    .exp-period { font-family: 'DM Mono',monospace; font-size: .72rem; color: var(--accent); background: rgba(200,241,53,.08); border: 1px solid var(--border); border-radius: 3px; padding: .25rem .7rem; display: flex; align-items: center; }
-    .exp-company { font-family: 'DM Mono',monospace; font-size: .8rem; color: var(--muted); margin-bottom: 1rem; }
-    .exp-points { list-style: none; }
-    .exp-points li { font-size: .95rem; color: var(--muted); margin-bottom: .5rem; padding-left: 1.2rem; position: relative; }
-    .exp-points li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: .8rem; }
-    .exp-tools { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: .4rem; }
-    .tool-chip { font-family: 'DM Mono',monospace; font-size: .68rem; background: rgba(77,255,195,.07); color: var(--accent); border: 1px solid rgba(62,16,212,0.2); border-radius: 3px; padding: .2rem .6rem; }
+  .fade-in{ opacity:0; transform:translateY(22px); transition:opacity .7s ease,transform .7s ease; }
+  .fade-in.visible{ opacity:1; transform:none; }
 
-    /* PROJECTS */
-    #projects { padding: 6rem 5%; background: var(--surface); }
-    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(340px,1fr)); gap: 2rem; }
-    .project-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; position: relative; transition: border-color .25s,transform .3s,box-shadow .3s; }
-    .project-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg,var(--accent),var(--accent2)); transform: scaleX(0); transform-origin: left; transition: transform .35s; z-index: 2; }
-    .project-card:hover::before { transform: scaleX(1); }
-    .project-card:hover { border-color: rgba(100,53,241,0.3); transform: translateY(-6px); box-shadow: 0 24px 60px rgba(0,0,0,.45); }
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
 
-    .carousel-wrapper { position: relative; width: 100%; aspect-ratio: 16/9; overflow: hidden; background: #080a0e; border-bottom: 1px solid var(--border); }
-    .carousel-track { display: flex; height: 100%; transition: transform 0.55s cubic-bezier(0.77,0,0.18,1); will-change: transform; cursor: grab; user-select: none; }
-    .carousel-track.dragging { transition: none; cursor: grabbing; }
-    .carousel-slide { flex: 0 0 100%; height: 100%; position: relative; overflow: hidden; }
-    .carousel-slide img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s ease; }
-    .project-card:hover .carousel-slide img { transform: scale(1.03); }
-    .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); z-index: 10; width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(200,241,53,.22); background: rgba(10,12,18,.7); backdrop-filter: blur(8px); color: var(--accent); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .2s,border-color .2s,transform .2s,opacity .3s; opacity: 0; }
-    .carousel-wrapper:hover .carousel-btn { opacity: 1; }
-    .carousel-btn:hover { background: rgba(200,241,53,.15); border-color: rgba(200,241,53,.55); transform: translateY(-50%) scale(1.12); }
-    .carousel-btn svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
-    .carousel-btn.prev { left: 10px; } .carousel-btn.next { right: 10px; }
-    .carousel-dots { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 5px; z-index: 10; }
-    .carousel-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.25); border: none; cursor: pointer; padding: 0; transition: background .25s,width .3s,border-radius .3s; }
-    .carousel-dot.active { background: var(--accent); width: 20px; border-radius: 3px; }
-    .carousel-counter { position: absolute; top: 10px; right: 12px; font-family: 'DM Mono',monospace; font-size: .62rem; color: rgba(255,255,255,.55); background: rgba(0,0,0,.5); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,.07); border-radius: 20px; padding: .18rem .55rem; z-index: 10; letter-spacing: .05em; }
-    .carousel-progress { position: absolute; bottom: 0; left: 0; height: 2px; background: linear-gradient(90deg,var(--accent),var(--accent2)); z-index: 10; width: 0%; opacity: .75; }
+  @media (prefers-reduced-motion:reduce){
+    *{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important; }
+  }
 
-    .project-body { padding: 1.5rem 1.8rem 1.8rem; }
-    .project-number { font-family: 'Syne',sans-serif; font-size: 2.4rem; font-weight: 800; color: rgba(255,255,255,0.889); line-height: 1; margin-bottom: .35rem; letter-spacing: -2px; }
-    .project-title { font-family: 'Syne',sans-serif; font-weight: 700; font-size: 1.05rem; margin-bottom: .6rem; display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; }
-    .project-stack { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1rem; }
-    .stack-badge { font-family: 'DM Mono',monospace; font-size: .65rem; letter-spacing: .08em; background: rgba(200,241,53,.08); color: var(--accent); border: 1px solid rgba(26,23,211,0.2); border-radius: 2px; padding: .2rem .55rem; text-transform: uppercase; text-decoration: none; }
-    .project-metrics { display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: 1rem; }
-    .metric { text-align: center; background: rgba(255,255,255,.03); border: 1px solid var(--border); border-radius: 6px; padding: .5rem .8rem; flex: 1; min-width: 70px; }
-    .metric-value { font-family: 'Syne',sans-serif; font-size: 1rem; font-weight: 800; color: var(--accent); display: block; }
-    .metric-label { font-family: 'DM Mono',monospace; font-size: .58rem; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
-    .project-desc { list-style: none; font-size: .86rem; color: var(--muted); }
-    .project-desc li { padding-left: 1.1rem; position: relative; margin-bottom: .3rem; }
-    .project-desc li::before { content: '▸'; position: absolute; left: 0; color: var(--accent2); font-size: .7rem; }
-
-    /* CERTIFICATIONS */
-    #certifications { padding: 6rem 5%; }
-    .certs-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 1rem; }
-    .cert-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.8rem; display: flex; gap: 1.2rem; align-items: flex-start; transition: border-color .25s,transform .25s; }
-    .cert-card:hover { border-color: rgba(45,5,246,0.35); transform: translateY(-3px); }
-    .cert-icon { width: 44px; height: 44px; border-radius: 8px; background: rgba(200,241,53,.1); border: 1px solid rgba(200,241,53,.2); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
-    .cert-info h3 { font-family: 'Syne',sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: .3rem; }
-    .cert-period { font-family: 'DM Mono',monospace; font-size: .7rem; color: var(--accent); }
-
-    /* EDUCATION */
-    #education { padding: 6rem 5%; background: var(--surface); }
-    .edu-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 1.2rem; }
-    .edu-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 2rem; position: relative; overflow: hidden; transition: border-color .25s,transform .25s; }
-    .edu-card:hover { border-color: rgba(28,45,226,0.3); transform: translateY(-4px); }
-    .edu-gpa { position: absolute; top: 1.5rem; right: 1.5rem; font-family: 'Syne',sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--accent); }
-    .edu-degree { font-family: 'Syne',sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: .3rem; }
-    .edu-institution { font-family: 'DM Mono',monospace; font-size: .78rem; color: var(--muted); margin-bottom: .5rem; }
-    .edu-year { font-family: 'DM Mono',monospace; font-size: .7rem; color: var(--accent); }
-
-    /* CONTACT */
-    #contact { padding: 6rem 5%; }
-    .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; max-width: 900px; }
-    .contact-text h2 { font-family: 'Syne',sans-serif; font-size: clamp(1.8rem,4vw,2.5rem); font-weight: 800; letter-spacing: -1.5px; margin-bottom: 1rem; }
-    .contact-text p { color: var(--muted); margin-bottom: 2rem; }
-    .contact-links { display: flex; flex-direction: column; gap: .8rem; }
-    .contact-link { display: flex; align-items: center; gap: .8rem; font-family: 'DM Mono',monospace; font-size: .82rem; color: var(--muted); text-decoration: none; transition: color .2s; }
-    .contact-link:hover { color: var(--accent); }
-    .contact-link-icon { width: 36px; height: 36px; background: var(--card); border: 1px solid var(--border); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: .9rem; }
-
-    footer { border-top: 1px solid var(--border); padding: 1.5rem 5%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-family: 'DM Mono',monospace; font-size: .7rem; color: var(--muted); position: relative; z-index: 1; }
-
-    .orb { position: fixed; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle,rgba(200,241,53,.04) 0%,transparent 70%); pointer-events: none; z-index: 0; transition: left .8s ease,top .8s ease; filter: blur(20px); }
-
-    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity .7s ease,transform .7s ease; }
-    .fade-in.visible { opacity: 1; transform: none; }
-
-    @media(max-width:768px){
-      .nav-links{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(13,15,20,.97);backdrop-filter:blur(12px);flex-direction:column;align-items:center;padding:2rem;gap:1.5rem;border-bottom:1px solid var(--border)}
-      .nav-links.open{display:flex} .hamburger{display:flex}
-      .contact-inner{grid-template-columns:1fr;gap:2rem}
-      .timeline::before,.timeline-dot{display:none} .timeline-item{padding-left:0}
-    }
-    @media(max-width:480px){
-      .hero-name{letter-spacing:-2px} .projects-grid{grid-template-columns:1fr}
-      .hero-cta{flex-direction:column;align-items:flex-start}
-      .loader-percent{font-size:52px;}
-    }
-  </style>
+  /* ═══════════ RESPONSIVE ═══════════ */
+  @media(max-width:900px){
+    .contact-inner{ grid-template-columns:1fr; gap:2rem; }
+  }
+  @media(max-width:768px){
+    .nav-links{ position:fixed; top:0; right:0; height:100vh; width:min(78vw,300px); background:rgba(10,14,22,.98); backdrop-filter:blur(16px); flex-direction:column; align-items:flex-start; justify-content:center; padding:2rem 2.4rem; gap:1.8rem; border-left:1px solid var(--border-soft); transform:translateX(100%); transition:transform .35s ease; }
+    .nav-links.open{ transform:translateX(0); }
+    .nav-links a{ font-size:.9rem; }
+    .hamburger{ display:flex; }
+    #hero{ padding-top:7rem; }
+    .exp-header{ flex-direction:column; align-items:flex-start; }
+  }
+  @media(max-width:600px){
+    #hero,#skills,#experience,#projects,#certifications,#education,#contact{ padding-left:6%; padding-right:6%; }
+    .hero-name{ letter-spacing:-1px; }
+    .projects-grid{ grid-template-columns:1fr; }
+    .hero-cta{ flex-direction:column; align-items:stretch; }
+    .btn{ justify-content:center; }
+    .project-metrics{ gap:.4rem; }
+    .metric{ min-width:64px; padding:.45rem .5rem; }
+    footer{ flex-direction:column; align-items:flex-start; }
+  }
+  @media(max-width:380px){
+    .gauge-wrap{ width:80vw; }
+    .loader-eyebrow{ font-size:9px; letter-spacing:.24em; }
+  }
+</style>
 </head>
 <body>
 
-  <!-- ENTRANCE LOADER -->
-  <div id="pg-loader">
-    <div class="loader-scan"></div>
-    <div class="loader-lines" id="loaderLines"></div>
-    <div class="loader-corner c-tl"></div>
-    <div class="loader-corner c-tr"></div>
-    <div class="loader-corner c-bl"></div>
-    <div class="loader-corner c-br"></div>
-    <div class="loader-inner">
-      <div class="loader-name">Guru Vignesh B</div>
-      <div class="loader-percent" id="loaderNum">0<sup>%</sup></div>
-      <div class="loader-bar-wrap">
-        <div class="loader-bar-fill" id="loaderBar"></div>
+<!-- ═══ ENTRANCE LOADER ═══ -->
+<div id="pg-loader">
+  <div class="loader-lines" id="loaderLines"></div>
+  <div class="loader-corner c-tl"></div><div class="loader-corner c-tr"></div>
+  <div class="loader-corner c-bl"></div><div class="loader-corner c-br"></div>
+
+  <div class="loader-inner">
+    <p class="loader-eyebrow">Compiling Profile</p>
+    <div class="gauge-wrap">
+      <svg viewBox="0 0 220 130">
+        <defs>
+          <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#c1573c"/>
+            <stop offset="55%" stop-color="#c9a227"/>
+            <stop offset="100%" stop-color="#3fa796"/>
+          </linearGradient>
+        </defs>
+        <path class="gauge-track" pathLength="100" d="M18,118 A92,92 0 0 1 202,118"/>
+        <path class="gauge-fill" id="gaugeFill" pathLength="100" d="M18,118 A92,92 0 0 1 202,118"/>
+        <line class="gauge-needle" id="gaugeNeedle" x1="110" y1="118" x2="110" y2="42" stroke="#eef0f2" stroke-width="2" stroke-linecap="round" transform="rotate(-90 110 118)"/>
+        <circle cx="110" cy="118" r="4.5" fill="#eef0f2"/>
+      </svg>
+      <div class="gauge-readout">
+        <div class="gauge-score tnum" id="gaugeScore">300</div>
+        <div class="gauge-band" id="gaugeBand">Building file</div>
       </div>
-      <div class="loader-status" id="loaderStatus">Initialising</div>
     </div>
+    <p class="loader-status" id="loaderStatus">Pulling credit file</p>
   </div>
+</div>
 
-  <!-- Loader phase cursors -->
-  <div class="loader-cursor" id="loaderCursor"></div>
-  <div class="loader-cursor-glow" id="loaderGlow"></div>
+<!-- SITE CURSOR -->
+<div class="site-cursor" id="siteCursor"></div>
+<div class="site-cursor-ring" id="siteCursorRing"></div>
 
-  <!-- Site cursor (active after loader) -->
-  <div class="site-cursor" id="siteCursor"></div>
-  <div class="site-cursor-ring" id="siteCursorRing"></div>
+<!-- ═══ PAGE CONTENT ═══ -->
+<div id="page-content">
 
-  <!-- PAGE CONTENT -->
-  <div id="page-content">
+  <nav>
+    <div class="nav-logo">GV<span>·</span>PORTFOLIO</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#certifications">Certifications</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
 
-    <div class="orb" id="orb"></div>
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-inner">
+      <p class="hero-tag">Data Analyst · Chennai, India</p>
+      <h1 class="hero-name">Guru Vignesh<span class="highlight">B.</span></h1>
+      <p class="hero-subtitle">Power BI · SQL · Excel · Python</p>
+      <p class="hero-bio">Aspiring Data Analyst with hands-on experience building interactive dashboards, cleaning messy datasets, and translating numbers into decisions — with a focus on credit risk and BFSI analytics.</p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="#contact" class="btn btn-outline">Get In Touch</a>
+        <a href="https://drive.google.com/file/d/1vqP3mr1ub3Qroq0m7c9pviWgKIYDkGN0/view?usp=drive_link" class="btn btn-resume" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Resume</span>
+        </a>
+      </div>
+    </div>
+    <div class="hero-scroll"><span class="scroll-line"></span>Scroll to explore</div>
+  </section>
 
-    <nav>
-      <div class="nav-logo">PORTFOLIO</div>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#certifications">Certifications</a></li>
-        <li><a href="#education">Education</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
-    </nav>
-
-    <!-- HERO -->
-    <section id="hero">
-      <div class="hero-inner">
-        <p class="hero-tag">Data Analyst · Chennai, India</p>
-        <h1 class="hero-name">GURU<span class="highlight">VIGNESH</span></h1>
-        <p class="hero-subtitle">Power BI · SQL · Excel · Python</p>
-        <p class="hero-bio">Aspiring Data Analyst with hands-on experience building interactive dashboards, performing data cleaning, and deriving actionable business insights from large datasets. Turning raw numbers into compelling stories.</p>
-        <div class="hero-cta">
-          <a href="#projects" class="btn btn-primary">View Projects</a>
-          <a href="#contact" class="btn btn-outline">Get In Touch</a>
-          <a href="https://drive.google.com/file/d/1vqP3mr1ub3Qroq0m7c9pviWgKIYDkGN0/view?usp=drive_link" class="btn btn-resume" target="_blank" rel="noopener noreferrer" download>
-            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            <span>Resume</span>
-          </a>
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-header fade-in">
+      <p class="section-label">What I Work With</p>
+      <h2 class="section-title">Technical Skills</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-category fade-in">
+        <p class="skill-cat-title">BI & Visualization</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Power BI Desktop</span><span class="skill-tag">Power BI Service</span>
+          <span class="skill-tag">Power Query</span><span class="skill-tag">DAX</span><span class="skill-tag">Data Storytelling</span>
         </div>
       </div>
-      <div class="hero-scroll"><span class="scroll-line"></span>Scroll to explore</div>
-    </section>
+      <div class="skill-category fade-in">
+        <p class="skill-cat-title">Data & Databases</p>
+        <div class="skill-tags">
+          <span class="skill-tag">SQL</span><span class="skill-tag">MySQL</span><span class="skill-tag">SQL Server</span>
+          <span class="skill-tag">Data Modelling</span><span class="skill-tag">Data Cleaning</span>
+        </div>
+      </div>
+      <div class="skill-category fade-in">
+        <p class="skill-cat-title">Spreadsheet & Office</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Advanced Excel</span><span class="skill-tag">Pivot Tables</span><span class="skill-tag">MS Office Suite</span>
+        </div>
+      </div>
+      <div class="skill-category fade-in">
+        <p class="skill-cat-title">Programming</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span><span class="skill-tag">Flask</span><span class="skill-tag">Node.js</span><span class="skill-tag">RESTful APIs</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- SKILLS -->
-    <section id="skills">
-      <div class="section-header fade-in">
-        <p class="section-label">What I Work With</p>
-        <h2 class="section-title">Technical Skills</h2>
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-header fade-in">
+      <p class="section-label">Work History</p>
+      <h2 class="section-title">Experience</h2>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="exp-header"><span class="exp-role">Digital Marketing Analyst</span><span class="exp-period">Sept 2025 – Feb 2026</span></div>
+        <div class="exp-company">Divs India · Chennai</div>
+        <ul class="exp-points">
+          <li>Analysed campaign performance data across paid and organic channels to improve lead quality and conversion rates</li>
+          <li>Monitored key KPIs including CTR, CPC, and ROI to optimise campaign effectiveness</li>
+          <li>Identified high-performing channels and audience segments through data-driven analysis</li>
+          <li>Prepared campaign performance reports analysing lead metrics, engagement, and conversion trends</li>
+        </ul>
       </div>
-      <div class="skills-grid">
-        <div class="skill-category fade-in">
-          <p class="skill-cat-title">BI & Visualization</p>
-          <div class="skill-tags">
-            <span class="skill-tag">Power BI Desktop</span><span class="skill-tag">Power BI Service</span>
-            <span class="skill-tag">Power Query</span><span class="skill-tag">DAX</span><span class="skill-tag">Data Storytelling</span>
-          </div>
-        </div>
-        <div class="skill-category fade-in">
-          <p class="skill-cat-title">Data & Databases</p>
-          <div class="skill-tags">
-            <span class="skill-tag">SQL</span><span class="skill-tag">MySQL</span><span class="skill-tag">SQL Server</span>
-            <span class="skill-tag">Data Modelling</span><span class="skill-tag">Data Cleaning</span>
-          </div>
-        </div>
-        <div class="skill-category fade-in">
-          <p class="skill-cat-title">Spreadsheet & Office</p>
-          <div class="skill-tags">
-            <span class="skill-tag">Advanced Excel</span><span class="skill-tag">Pivot Tables</span><span class="skill-tag">MS Office Suite</span>
-          </div>
-        </div>
-        <div class="skill-category fade-in">
-          <p class="skill-cat-title">Programming</p>
-          <div class="skill-tags">
-            <span class="skill-tag">Python</span><span class="skill-tag">Flask</span><span class="skill-tag">Node.js</span><span class="skill-tag">RESTful APIs</span>
-          </div>
-        </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="exp-header"><span class="exp-role">Full Stack Developer (Intern)</span><span class="exp-period">Jan 2025 – Jul 2025</span></div>
+        <div class="exp-company">Educer Infinity · Madurai</div>
+        <ul class="exp-points">
+          <li>Built RESTful APIs using Flask to handle structured data and backend logic</li>
+          <li>Improved application performance, reducing load time by 25%</li>
+          <li>Worked with SQL databases to store, retrieve, and manipulate data efficiently</li>
+        </ul>
+        <div class="exp-tools"><span class="tool-chip">Python</span><span class="tool-chip">Node.js</span><span class="tool-chip">MySQL</span></div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- EXPERIENCE -->
-    <section id="experience">
-      <div class="section-header fade-in">
-        <p class="section-label">Work History</p>
-        <h2 class="section-title">Experience</h2>
-      </div>
-      <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="exp-header"><span class="exp-role">Digital Marketing Analyst</span><span class="exp-period">Sept 2025 – Feb 2026</span></div>
-          <div class="exp-company">Divs India · Chennai</div>
-          <ul class="exp-points">
-            <li>Analysed campaign performance data across paid and organic channels to improve lead quality and conversion rates</li>
-            <li>Monitored key KPIs including CTR, CPC, and ROI to optimise campaign effectiveness</li>
-            <li>Identified high-performing channels and audience segments through data-driven analysis</li>
-            <li>Prepared campaign performance reports analysing lead metrics, engagement, and conversion trends</li>
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-header fade-in">
+      <p class="section-label">What I've Built</p>
+      <h2 class="section-title">Projects</h2>
+    </div>
+    <div class="projects-grid">
+
+      <!-- Project 1 -->
+      <div class="project-card fade-in">
+        <div class="carousel-wrapper" data-autoplay="4000">
+          <div class="carousel-track">
+            <div class="carousel-slide"><img src="images/1.png" alt="Warehouse Inventory dashboard screenshot 1" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="images/2.png" alt="Warehouse Inventory dashboard screenshot 2" loading="lazy" /></div>
+          </div>
+          <button class="carousel-btn prev" aria-label="Previous slide"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+          <button class="carousel-btn next" aria-label="Next slide"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+          <div class="carousel-dots"></div>
+          <div class="carousel-counter"></div>
+          <div class="carousel-progress"></div>
+        </div>
+        <div class="project-body">
+          <p class="project-number">Entry No. 01</p>
+          <h3 class="project-title">E-commerce Warehouse Inventory Analysis <a class="project-link" href="https://github.com/guruvignesh2812/Warehouse_Inventory_Analysis" target="_blank" rel="noopener noreferrer">Repo ↗</a></h3>
+          <div class="project-stack">
+            <span class="stack-badge">Excel</span><span class="stack-badge">Power BI</span>
+            <span class="stack-badge">Power Query</span><span class="stack-badge">DAX</span>
+          </div>
+          <div class="project-metrics">
+            <div class="metric"><span class="metric-value tnum">2K+</span><span class="metric-label">Orders</span></div>
+            <div class="metric"><span class="metric-value tnum">4K</span><span class="metric-label">Units Sold</span></div>
+            <div class="metric"><span class="metric-value tnum">₹2.8M</span><span class="metric-label">Revenue</span></div>
+          </div>
+          <ul class="project-desc">
+            <li>Identified Electronics as the only growth driver (+15.98% YoY), while all other categories declined sharply</li>
+            <li>Analysed customer purchasing behaviour to uncover buying patterns</li>
+            <li>Evaluated sales trends across monthly, quarterly, and yearly periods</li>
           </ul>
         </div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="exp-header"><span class="exp-role">Full Stack Developer (Intern)</span><span class="exp-period">Jan 2025 – Jul 2025</span></div>
-          <div class="exp-company">Educer Infinity · Madurai</div>
-          <ul class="exp-points">
-            <li>Built RESTful APIs using Flask to handle structured data and backend logic</li>
-            <li>Improved application performance, reducing load time by 25%</li>
-            <li>Worked with SQL databases to store, retrieve, and manipulate data efficiently</li>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="project-card fade-in">
+        <div class="carousel-wrapper" data-autoplay="4500">
+          <div class="carousel-track">
+            <div class="carousel-slide"><img src="images/p1.png" alt="Pharmacy Supply Chain dashboard screenshot 1" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="images/p2.png" alt="Pharmacy Supply Chain dashboard screenshot 2" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="images/p3.png" alt="Pharmacy Supply Chain dashboard screenshot 3" loading="lazy" /></div>
+          </div>
+          <button class="carousel-btn prev" aria-label="Previous slide"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+          <button class="carousel-btn next" aria-label="Next slide"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+          <div class="carousel-dots"></div>
+          <div class="carousel-counter"></div>
+          <div class="carousel-progress"></div>
+        </div>
+        <div class="project-body">
+          <p class="project-number">Entry No. 02</p>
+          <h3 class="project-title">European Pharmacy Supply Chain <a class="project-link" href="https://github.com/guruvignesh2812/E-commerce_Sales_Analysis" target="_blank" rel="noopener noreferrer">Repo ↗</a></h3>
+          <div class="project-stack">
+            <span class="stack-badge">Power BI</span><span class="stack-badge">Excel</span>
+            <span class="stack-badge">Power Query</span><span class="stack-badge">DAX</span>
+          </div>
+          <div class="project-metrics">
+            <div class="metric"><span class="metric-value tnum">446K</span><span class="metric-label">Units Sold</span></div>
+            <div class="metric"><span class="metric-value tnum">£9M</span><span class="metric-label">Revenue</span></div>
+            <div class="metric"><span class="metric-value tnum">€2.4M</span><span class="metric-label">Profit</span></div>
+          </div>
+          <ul class="project-desc">
+            <li>Built dynamic KPI tracking for Revenue, Profit, Quantity, and YoY</li>
+            <li>Conducted country-level sales comparison for top revenue-generating markets</li>
+            <li>Identified Medium stores contributing 44% of total revenue</li>
+            <li>Segment analysis across Urban, Suburban, and Rural pharmacy types</li>
           </ul>
-          <div class="exp-tools"><span class="tool-chip">Python</span><span class="tool-chip">Node.js</span><span class="tool-chip">MySQL</span></div>
         </div>
       </div>
-    </section>
 
-    <!-- PROJECTS -->
-    <section id="projects">
-      <div class="section-header fade-in">
-        <p class="section-label">What I've Built</p>
-        <h2 class="section-title">Projects</h2>
-      </div>
-      <div class="projects-grid">
-
-        <!-- Project 1 -->
-        <div class="project-card fade-in">
-          <div class="carousel-wrapper" data-autoplay="4000">
-            <div class="carousel-track">
-              <div class="carousel-slide">
-                <img src="images/1.png" alt="Warehouse Inventory Screenshot 1" loading="lazy" />
-              </div>
-              <div class="carousel-slide">
-                <img src="images/2.png" alt="Warehouse Inventory Screenshot 2" loading="lazy" />
-              </div>
-            </div>
-            <button class="carousel-btn prev" aria-label="Previous"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
-            <button class="carousel-btn next" aria-label="Next"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
-            <div class="carousel-dots"></div>
-            <div class="carousel-counter"></div>
-            <div class="carousel-progress"></div>
+      <!-- Project 3 -->
+      <div class="project-card fade-in">
+        <div class="carousel-wrapper" data-autoplay="4500">
+          <div class="carousel-track">
+            <div class="carousel-slide"><img src="images/p-3.png" alt="Kombucha Marathon Sale dashboard screenshot 1" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="images/p-3.1.png" alt="Kombucha Marathon Sale dashboard screenshot 2" loading="lazy" /></div>
           </div>
-          <div class="project-body">
-            <div class="project-number">01</div>
-            <h3 class="project-title">E-commerce Warehouse Inventory Analysis <a class="stack-badge" href="https://github.com/guruvignesh2812/Warehouse_Inventory_Analysis" target="_blank">Link ↗</a></h3>
-            <div class="project-stack">
-              <span class="stack-badge">Excel</span><span class="stack-badge">Power BI</span>
-              <span class="stack-badge">Power Query</span><span class="stack-badge">DAX</span>
-            </div>
-            <div class="project-metrics">
-              <div class="metric"><span class="metric-value">2K+</span><span class="metric-label">Orders</span></div>
-              <div class="metric"><span class="metric-value">4K</span><span class="metric-label">Units Sold</span></div>
-              <div class="metric"><span class="metric-value">₹2.8M</span><span class="metric-label">Revenue</span></div>
-            </div>
-            <ul class="project-desc">
-              <li>Analysis identified Electronics as the only growth driver (+15.98% YoY), while all other categories declined sharply</li>
-              <li>Analysed customer purchasing behaviour to uncover buying patterns</li>
-              <li>Evaluated sales trends across monthly, quarterly, and yearly periods</li>
-            </ul>
-          </div>
+          <button class="carousel-btn prev" aria-label="Previous slide"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+          <button class="carousel-btn next" aria-label="Next slide"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+          <div class="carousel-dots"></div>
+          <div class="carousel-counter"></div>
+          <div class="carousel-progress"></div>
         </div>
-
-        <!-- Project 2 -->
-        <div class="project-card fade-in">
-          <div class="carousel-wrapper" data-autoplay="4500">
-            <div class="carousel-track">
-              <div class="carousel-slide">
-                <img src="images/p1.png" alt="Pharmacy Supply Chain Screenshot 1" loading="lazy" />
-              </div>
-              <div class="carousel-slide">
-                <img src="images/p2.png" alt="Pharmacy Supply Chain Screenshot 2" loading="lazy" />
-              </div>
-              <div class="carousel-slide">
-                <img src="images/p3.png" alt="Pharmacy Supply Chain Screenshot 3" loading="lazy" />
-              </div>
-            </div>
-            <button class="carousel-btn prev" aria-label="Previous"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
-            <button class="carousel-btn next" aria-label="Next"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
-            <div class="carousel-dots"></div>
-            <div class="carousel-counter"></div>
-            <div class="carousel-progress"></div>
+        <div class="project-body">
+          <p class="project-number">Entry No. 03</p>
+          <h3 class="project-title">Divs Kombucha Marathon Sale Analysis <a class="project-link" href="https://github.com/guruvignesh2812/KombuchaMarathonSaleAnalysis" target="_blank" rel="noopener noreferrer">Repo ↗</a></h3>
+          <div class="project-stack">
+            <span class="stack-badge">Power BI</span><span class="stack-badge">Excel</span>
+            <span class="stack-badge">Power Query</span><span class="stack-badge">DAX</span>
           </div>
-          <div class="project-body">
-            <div class="project-number">02</div>
-            <h3 class="project-title">European Pharmacy Supply Chain <a class="stack-badge" href="https://github.com/guruvignesh2812/E-commerce_Sales_Analysis" target="_blank">Link ↗</a></h3>
-            <div class="project-stack">
-              <span class="stack-badge">Power BI</span><span class="stack-badge">Excel</span>
-              <span class="stack-badge">Power Query</span><span class="stack-badge">DAX</span>
-            </div>
-            <div class="project-metrics">
-              <div class="metric"><span class="metric-value">446K</span><span class="metric-label">Units Sold</span></div>
-              <div class="metric"><span class="metric-value">£9M</span><span class="metric-label">Revenue</span></div>
-              <div class="metric"><span class="metric-value">€2.4M</span><span class="metric-label">Profit</span></div>
-            </div>
-            <ul class="project-desc">
-              <li>Built dynamic KPI tracking Revenue, Profit, Quantity, and YoY</li>
-              <li>Conducted country-level sales comparison for top revenue-generating markets</li>
-              <li>Identified Medium stores contributing 44% of total revenue</li>
-              <li>Segment analysis across Urban, Suburban, and Rural pharmacy types</li>
-              <li>Utilised DAX: CALCULATE, SUM, YoY %, Aggregations</li>
-            </ul>
+          <div class="project-metrics">
+            <div class="metric"><span class="metric-value tnum">165</span><span class="metric-label">Total Purchases</span></div>
+            <div class="metric"><span class="metric-value tnum">3.39</span><span class="metric-label">Avg. Rating</span></div>
+            <div class="metric"><span class="metric-value tnum">38</span><span class="metric-label">Avg. Age</span></div>
           </div>
-        </div>
-
-         <!-- Project 3 -->
-        <div class="project-card fade-in">
-          <div class="carousel-wrapper" data-autoplay="4500">
-            <div class="carousel-track">
-              <div class="carousel-slide">
-                <img src="images/p-3.png" alt="Pharmacy Supply Chain Screenshot 1" loading="lazy" />
-              </div>
-              <div class="carousel-slide">
-                <img src="images/p-3.1.png" alt="Pharmacy Supply Chain Screenshot 2" loading="lazy" />
-              </div>
-              
-            </div>
-            <button class="carousel-btn prev" aria-label="Previous"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
-            <button class="carousel-btn next" aria-label="Next"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
-            <div class="carousel-dots"></div>
-            <div class="carousel-counter"></div>
-            <div class="carousel-progress"></div>
-          </div>
-          <div class="project-body">
-            <div class="project-number">03</div>
-            <h3 class="project-title">Divs Kombucha Marathon Sale Analysis <a class="stack-badge" href="https://github.com/guruvignesh2812/KombuchaMarathonSaleAnalysis" target="_blank">Link ↗</a></h3>
-            <div class="project-stack">
-              <span class="stack-badge">Power BI</span><span class="stack-badge">Excel</span>
-              <span class="stack-badge">Power Query</span><span class="stack-badge">DAX</span>
-            </div>
-            <div class="project-metrics">
-              <div class="metric"><span class="metric-value">165</span><span class="metric-label">Total Purchase</span></div>
-              <div class="metric"><span class="metric-value">3.39</span><span class="metric-label">Average Ratings</span></div>
-              <div class="metric"><span class="metric-value">38</span><span class="metric-label">Average Age</span></div>
-            </div>
-            <ul class="project-desc">
-              <li>Built dynamic KPI tracking</li>
-              <li>Analysed Customer Purchasing Behaviour</li>
-              <li>Identified Gender-wise Distribution</li>
-              <li>Segment analysis across Through Professional</li>
-              <li>Utilised DAX: CALCULATE, SUM, YoY %, Aggregations</li>
-            </ul>
-          </div>
-        </div>
-
-<!-- project-4 -->
-         <div class="project-card fade-in">
-          <div class="carousel-wrapper" data-autoplay="4500">
-            <div class="carousel-track">
-              <div class="carousel-slide">
-                <img src="images/CR-1.png" alt="cocoa-2" loading="lazy" />
-              </div>
-              <div class="carousel-slide">
-                <img src="images/CR-2.png" alt="cocoa Screenshot 2" loading="lazy" />
-              </div>
-              
-            </div>
-            <button class="carousel-btn prev" aria-label="Previous"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
-            <button class="carousel-btn next" aria-label="Next"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
-            <div class="carousel-dots"></div>
-            <div class="carousel-counter"></div>
-            <div class="carousel-progress"></div>
-          </div>
-          <div class="project-body">
-            <div class="project-number">04</div>
-            <h3 class="project-title">Bank Credit Risk Analytics <a class="stack-badge" href="https://github.com/guruvignesh2812/Credit_Risk_Analytics" target="_blank">Link ↗</a></h3>
-            <div class="project-stack">
-              <span class="stack-badge">Power BI</span>
-              <span class="stack-badge">Power Query</span><span class="stack-badge">DAX</span>
-            </div>
-            <div class="project-metrics">
-              <div class="metric"><span class="metric-value">29k</span><span class="metric-label">Total Applicant</span></div>
-              <div class="metric"><span class="metric-value">269M</span><span class="metric-label">Total Exposure</span></div>
-              <div class="metric"><span class="metric-value">22.5%</span><span class="metric-label">Defaulter Rate</span></div>
-            </div>
-            <ul class="project-desc">
-              <li>Surfaced $269M total exposure with $69M (25.7%) flagged at-risk and a 22.50% overall default rate</li>
-              <li>Identified DTI > 50% as a critical threshold — default risk roughly quintuples past this point (56.66% vs. 11.27%)</li>
-              <li>Confirmed Loan Grade as a near-monotonic risk indicator, from 17.91% default (Grade A) to 96% (Grade G)</li>
-              <li>Delivered a data-driven view that pinpoints compounding risk factors (low income + high DTI/LTI + weak grade) driving the majority of at-risk exposure</li>
-              <li>Utilised DAX: CALCULATE, SUM, YoY %, Aggregations</li>
-            </ul>
-          </div>
-        </div>
-
-
-        
-
-      </div>
-    </section>
-
-    <!-- CERTIFICATIONS -->
-    <section id="certifications">
-      <div class="section-header fade-in">
-        <p class="section-label">Credentials</p>
-        <h2 class="section-title">Certifications</h2>
-      </div>
-      <div class="certs-grid">
-        <div class="cert-card fade-in"><div class="cert-icon">📊</div><div class="cert-info"><h3>AI Driven Data Analytics Certification</h3><div class="cert-period">Illinois Tech – USA</div></div></div>
-        <div class="cert-card fade-in"><div class="cert-icon">📊</div><div class="cert-info"><h3>Data Analytics Certification</h3><div class="cert-period">Entri Elevate</div></div></div>
-        <div class="cert-card fade-in"><div class="cert-icon">📊</div><div class="cert-info"><h3>Empowering Business with Effective Insights</h3><div class="cert-period">Forage</div></div></div>
-      </div>
-    </section>
-
-    <!-- EDUCATION -->
-    <section id="education">
-      <div class="section-header fade-in">
-        <p class="section-label">Academic Background</p>
-        <h2 class="section-title">Education</h2>
-      </div>
-      <div class="edu-grid">
-        <div class="edu-card fade-in">
-          <div class="edu-gpa"></div>
-          <div class="edu-degree">Master's in Computer Applications</div>
-          <div class="edu-institution">Sourashtra College</div>
-          <div class="edu-year">2022 – 2024 · GPA 7.4</div>
-        </div>
-        <div class="edu-card fade-in">
-          <div class="edu-gpa"></div>
-          <div class="edu-degree">Bachelor's in Computer Science</div>
-          <div class="edu-institution">The American College</div>
-          <div class="edu-year">2018 – 2021 · GPA 6.7</div>
+          <ul class="project-desc">
+            <li>Built dynamic KPI tracking for purchase volume and ratings</li>
+            <li>Analysed customer purchasing behaviour and gender-wise distribution</li>
+            <li>Segment analysis across acquisition channels, including professional referrals</li>
+          </ul>
         </div>
       </div>
-    </section>
 
-    <!-- CONTACT -->
-    <section id="contact">
-      <div class="contact-inner">
-        <div class="contact-text fade-in">
-          <p class="section-label">Let's Connect</p>
-          <h2>Open to<br>Opportunities</h2>
-          <p>Looking for data analyst roles where I can turn complex datasets into clear, actionable insights. Let's talk!</p>
-          <div class="contact-links">
-            <a class="contact-link" href="tel:+918610955539"><span class="contact-link-icon">📞</span>+91 86109 55539</a>
-            <a class="contact-link" href="mailto:guruvignesh.off@gmail.com"><span class="contact-link-icon">✉️</span>Gmail</a>
-            <a class="contact-link" href="https://www.linkedin.com/in/guru-vignesh-4224a0322"><span class="contact-link-icon">💼</span>LinkedIn Profile</a>
-            <a class="contact-link" href="https://github.com/guruvignesh2812"><span class="contact-link-icon">🐙</span>GitHub Profile</a>
+      <!-- Project 4 -->
+      <div class="project-card fade-in">
+        <div class="carousel-wrapper" data-autoplay="4500">
+          <div class="carousel-track">
+            <div class="carousel-slide"><img src="images/CR-1.png" alt="Bank Credit Risk Analytics dashboard screenshot 1" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="images/CR-2.png" alt="Bank Credit Risk Analytics dashboard screenshot 2" loading="lazy" /></div>
           </div>
+          <button class="carousel-btn prev" aria-label="Previous slide"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+          <button class="carousel-btn next" aria-label="Next slide"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+          <div class="carousel-dots"></div>
+          <div class="carousel-counter"></div>
+          <div class="carousel-progress"></div>
+        </div>
+        <div class="project-body">
+          <p class="project-number">Entry No. 04</p>
+          <h3 class="project-title">Bank Credit Risk Analytics <a class="project-link" href="https://github.com/guruvignesh2812/Credit_Risk_Analytics" target="_blank" rel="noopener noreferrer">Repo ↗</a></h3>
+          <div class="project-stack">
+            <span class="stack-badge">Power BI</span><span class="stack-badge">Power Query</span><span class="stack-badge">DAX</span>
+          </div>
+          <div class="project-metrics">
+            <div class="metric"><span class="metric-value tnum">29K</span><span class="metric-label">Applicants</span></div>
+            <div class="metric"><span class="metric-value tnum">$269M</span><span class="metric-label">Total Exposure</span></div>
+            <div class="metric"><span class="metric-value risk tnum">22.5%</span><span class="metric-label">Default Rate</span></div>
+          </div>
+          <ul class="project-desc">
+            <li>Surfaced $269M total exposure with $69M (25.7%) flagged at-risk and a 22.50% overall default rate</li>
+            <li>Identified DTI > 50% as a critical threshold — default risk roughly quintuples past this point (56.66% vs. 11.27%)</li>
+            <li>Confirmed Loan Grade as a near-monotonic risk indicator, from 17.91% default (Grade A) to 96% (Grade G)</li>
+            <li>Delivered a data-driven view pinpointing compounding risk factors driving the majority of at-risk exposure</li>
+          </ul>
         </div>
       </div>
-    </section>
 
-    <footer>
-      <span>© 2026 Guru Vignesh B</span>
-      <span>· Chennai, India</span>
-    </footer>
+    </div>
+  </section>
 
-  </div><!-- /#page-content -->
+  <!-- CERTIFICATIONS -->
+  <section id="certifications">
+    <div class="section-header fade-in">
+      <p class="section-label">Credentials</p>
+      <h2 class="section-title">Certifications</h2>
+    </div>
+    <div class="certs-grid">
+      <div class="cert-card fade-in">
+        <div class="cert-icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg></div>
+        <div class="cert-info"><h3>AI Driven Data Analytics Certification</h3><div class="cert-period">Illinois Tech — USA</div></div>
+      </div>
+      <div class="cert-card fade-in">
+        <div class="cert-icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg></div>
+        <div class="cert-info"><h3>Data Analytics Certification</h3><div class="cert-period">Entri Elevate</div></div>
+      </div>
+      <div class="cert-card fade-in">
+        <div class="cert-icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg></div>
+        <div class="cert-info"><h3>Empowering Business with Effective Insights</h3><div class="cert-period">Forage</div></div>
+      </div>
+    </div>
+  </section>
 
-  <script>
-    /* ─── ENTRANCE LOADER ─── */
-    (function () {
-      var loader      = document.getElementById('pg-loader');
-      var bar         = document.getElementById('loaderBar');
-      var numEl       = document.getElementById('loaderNum');
-      var statusEl    = document.getElementById('loaderStatus');
-      var lCursor     = document.getElementById('loaderCursor');
-      var lGlow       = document.getElementById('loaderGlow');
-      var linesEl     = document.getElementById('loaderLines');
-      var pageEl      = document.getElementById('page-content');
-      var sCursor     = document.getElementById('siteCursor');
-      var sCursorRing = document.getElementById('siteCursorRing');
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="section-header fade-in">
+      <p class="section-label">Academic Background</p>
+      <h2 class="section-title">Education</h2>
+    </div>
+    <div class="edu-grid">
+      <div class="edu-card fade-in">
+        <div class="edu-degree">Master's in Computer Applications</div>
+        <div class="edu-institution">Sourashtra College</div>
+        <div class="edu-meta"><span class="edu-year">2022 – 2024</span><span class="edu-gpa">GPA 7.4</span></div>
+      </div>
+      <div class="edu-card fade-in">
+        <div class="edu-degree">Bachelor's in Computer Science</div>
+        <div class="edu-institution">The American College</div>
+        <div class="edu-meta"><span class="edu-year">2018 – 2021</span><span class="edu-gpa">GPA 6.7</span></div>
+      </div>
+    </div>
+  </section>
 
-      /* Random grid lines */
-      for (var i = 0; i < 8; i++) {
-        var h = document.createElement('div');
-        h.className = 'loader-line';
-        h.style.top = (Math.random() * 100) + '%';
-        linesEl.appendChild(h);
-        var v = document.createElement('div');
-        v.className = 'loader-line-v';
-        v.style.left = (Math.random() * 100) + '%';
-        linesEl.appendChild(v);
-      }
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="contact-text fade-in">
+        <p class="section-label">Let's Connect</p>
+        <h2>Open to Opportunities</h2>
+        <p>Looking for data analyst roles where I can turn complex datasets into clear, actionable insights — especially in banking and BFSI. Let's talk.</p>
+      </div>
+      <div class="contact-links fade-in">
+        <a class="contact-link" href="tel:+918610955539"><span class="contact-link-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>+91 86109 55539</a>
+        <a class="contact-link" href="mailto:guruvignesh.off@gmail.com"><span class="contact-link-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/></svg></span>guruvignesh.off@gmail.com</a>
+        <a class="contact-link" href="https://www.linkedin.com/in/guru-vignesh-4224a0322" target="_blank" rel="noopener noreferrer"><span class="contact-link-icon"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></span>LinkedIn Profile</a>
+        <a class="contact-link" href="https://github.com/guruvignesh2812" target="_blank" rel="noopener noreferrer"><span class="contact-link-icon"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></span>GitHub Profile</a>
+      </div>
+    </div>
+  </section>
 
-      /* Loader cursor */
-      document.addEventListener('mousemove', function (e) {
-        lCursor.style.left = e.clientX + 'px';
-        lCursor.style.top  = e.clientY + 'px';
-        lGlow.style.left   = e.clientX + 'px';
-        lGlow.style.top    = e.clientY + 'px';
-      });
+  <footer>
+    <span>© 2026 Guru Vignesh B</span>
+    <span>Chennai, India</span>
+  </footer>
 
-      var stages = [
-        { at: 0,  label: 'Initialising' },
-        { at: 18, label: 'Loading assets' },
-        { at: 40, label: 'Building components' },
-        { at: 65, label: 'Rendering visuals' },
-        { at: 88, label: 'Almost ready' },
-        { at: 99, label: 'Done' }
-      ];
+</div><!-- /#page-content -->
 
-      var DURATION  = 2700;
-      var startTime = performance.now();
+<script>
+  /* ─── ENTRANCE LOADER — credit score gauge ─── */
+  (function () {
+    var loader   = document.getElementById('pg-loader');
+    var fillPath = document.getElementById('gaugeFill');
+    var needle   = document.getElementById('gaugeNeedle');
+    var scoreEl  = document.getElementById('gaugeScore');
+    var bandEl   = document.getElementById('gaugeBand');
+    var statusEl = document.getElementById('loaderStatus');
+    var linesEl  = document.getElementById('loaderLines');
+    var pageEl   = document.getElementById('page-content');
+    var sCursor  = document.getElementById('siteCursor');
+    var sRing    = document.getElementById('siteCursorRing');
 
-      function easeInOut(t) {
-        return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-      }
-
-      function tick(now) {
-        var raw   = Math.min((now - startTime) / DURATION, 1);
-        var pct   = Math.min(Math.round(easeInOut(raw) * 100), 100);
-
-        bar.style.width       = pct + '%';
-        numEl.innerHTML       = pct + '<sup>%</sup>';
-
-        var label = stages[0].label;
-        for (var s = 0; s < stages.length; s++) {
-          if (pct >= stages[s].at) label = stages[s].label;
-        }
-        statusEl.textContent = label;
-
-        if (pct < 100) {
-          requestAnimationFrame(tick);
-        } else {
-          statusEl.textContent = 'Welcome';
-          setTimeout(function () {
-            loader.classList.add('done');
-            lCursor.style.display = 'none';
-            lGlow.style.display   = 'none';
-            pageEl.classList.add('revealed');
-            sCursor.classList.add('active');
-            sCursorRing.classList.add('active');
-          }, 500);
-        }
-      }
-      requestAnimationFrame(tick);
-    })();
-
-    /* ─── SITE CURSOR ─── */
-    (function () {
-      var dot  = document.getElementById('siteCursor');
-      var ring = document.getElementById('siteCursorRing');
-
-      document.addEventListener('mousemove', function (e) {
-        dot.style.left  = e.clientX + 'px';
-        dot.style.top   = e.clientY + 'px';
-        ring.style.left = e.clientX + 'px';
-        ring.style.top  = e.clientY + 'px';
-      });
-
-      var hoverEls = document.querySelectorAll('a,button,.project-card,.skill-category,.cert-card,.edu-card');
-      hoverEls.forEach(function (el) {
-        el.addEventListener('mouseenter', function () { ring.style.width = '56px'; ring.style.height = '56px'; });
-        el.addEventListener('mouseleave', function () { ring.style.width = '36px'; ring.style.height = '36px'; });
-      });
-
-      document.addEventListener('mousedown', function () { dot.style.transform = 'translate(-50%,-50%) scale(0.65)'; });
-      document.addEventListener('mouseup',   function () { dot.style.transform = 'translate(-50%,-50%) scale(1)'; });
-    })();
-
-    /* ─── ORB ─── */
-    var orb = document.getElementById('orb');
-    document.addEventListener('mousemove', function (e) {
-      orb.style.left = (e.clientX - 250) + 'px';
-      orb.style.top  = (e.clientY - 250) + 'px';
-    });
-
-    /* ─── NAV ─── */
-    var hamburger = document.getElementById('hamburger');
-    var navLinks  = document.getElementById('navLinks');
-    hamburger.addEventListener('click', function () { navLinks.classList.toggle('open'); });
-    navLinks.querySelectorAll('a').forEach(function (a) {
-      a.addEventListener('click', function () { navLinks.classList.remove('open'); });
-    });
-
-    /* ─── FADE IN ON SCROLL ─── */
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry, i) {
-        if (entry.isIntersecting) {
-          setTimeout(function () { entry.target.classList.add('visible'); }, i * 80);
-        }
-      });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.fade-in').forEach(function (el) { io.observe(el); });
-
-    /* ─── CAROUSEL ─── */
-    class Carousel {
-      constructor(wrapper) {
-        this.wrapper  = wrapper;
-        this.track    = wrapper.querySelector('.carousel-track');
-        this.slides   = wrapper.querySelectorAll('.carousel-slide');
-        this.dotsEl   = wrapper.querySelector('.carousel-dots');
-        this.counter  = wrapper.querySelector('.carousel-counter');
-        this.progress = wrapper.querySelector('.carousel-progress');
-        this.prevBtn  = wrapper.querySelector('.carousel-btn.prev');
-        this.nextBtn  = wrapper.querySelector('.carousel-btn.next');
-        this.total    = this.slides.length;
-        this.current  = 0;
-        this.delay    = parseInt(wrapper.dataset.autoplay) || 4000;
-        this.timer    = null;
-
-        this.dots = Array.from({ length: this.total }, (_, i) => {
-          const d = document.createElement('button');
-          d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-          d.setAttribute('aria-label', 'Slide ' + (i + 1));
-          d.addEventListener('click', () => this.goTo(i));
-          this.dotsEl.appendChild(d);
-          return d;
-        });
-
-        this.prevBtn.addEventListener('click', () => this.prev());
-        this.nextBtn.addEventListener('click', () => this.next());
-
-        this.dragX = 0; this.dragDelta = 0; this.dragging = false;
-        this.track.addEventListener('mousedown',  e => this.dragStart(e.clientX));
-        this.track.addEventListener('touchstart', e => this.dragStart(e.touches[0].clientX), { passive: true });
-        this.track.addEventListener('mousemove',  e => this.dragMove(e.clientX));
-        this.track.addEventListener('touchmove',  e => this.dragMove(e.touches[0].clientX), { passive: true });
-        this.track.addEventListener('mouseup',    () => this.dragEnd());
-        this.track.addEventListener('touchend',   () => this.dragEnd());
-        this.track.addEventListener('mouseleave', () => { if (this.dragging) this.dragEnd(); });
-
-        wrapper.addEventListener('mouseenter', () => this.stop());
-        wrapper.addEventListener('mouseleave', () => this.start());
-
-        this.render();
-        this.start();
-      }
-
-      goTo(i) { this.current = ((i % this.total) + this.total) % this.total; this.render(); this.restart(); }
-      prev()   { this.goTo(this.current - 1); }
-      next()   { this.goTo(this.current + 1); }
-
-      render() {
-        this.track.style.transform = `translateX(-${this.current * 100}%)`;
-        this.counter.textContent   = `${this.current + 1} / ${this.total}`;
-        this.dots.forEach((d, i) => d.classList.toggle('active', i === this.current));
-      }
-
-      start() {
-        this.stop();
-        this.progress.style.transition = 'none';
-        this.progress.style.width = '0%';
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-          this.progress.style.transition = `width ${this.delay}ms linear`;
-          this.progress.style.width = '100%';
-        }));
-        this.timer = setTimeout(() => { this.next(); this.start(); }, this.delay);
-      }
-
-      stop() {
-        clearTimeout(this.timer);
-        this.progress.style.transition = 'none';
-        this.progress.style.width = '0%';
-      }
-
-      restart() { this.stop(); this.start(); }
-
-      dragStart(x) {
-        this.dragging = true; this.dragX = x; this.dragDelta = 0;
-        this.track.classList.add('dragging'); this.stop();
-      }
-      dragMove(x) {
-        if (!this.dragging) return;
-        this.dragDelta = x - this.dragX;
-        const pct = (this.dragDelta / this.wrapper.offsetWidth) * 100;
-        this.track.style.transform = `translateX(calc(-${this.current * 100}% + ${pct}%))`;
-      }
-      dragEnd() {
-        if (!this.dragging) return;
-        this.dragging = false;
-        this.track.classList.remove('dragging');
-        const threshold = this.wrapper.offsetWidth * 0.2;
-        if      (this.dragDelta < -threshold) this.next();
-        else if (this.dragDelta >  threshold) this.prev();
-        else this.render();
-        this.start();
-      }
+    for (var i = 0; i < 7; i++) {
+      var h = document.createElement('div');
+      h.className = 'loader-line'; h.style.top = (Math.random() * 100) + '%';
+      linesEl.appendChild(h);
+      var v = document.createElement('div');
+      v.className = 'loader-line-v'; v.style.left = (Math.random() * 100) + '%';
+      linesEl.appendChild(v);
     }
 
-    document.querySelectorAll('.carousel-wrapper').forEach(w => new Carousel(w));
-  </script>
+    var stages = [
+      { at: 0,  label: 'Pulling credit file' },
+      { at: 18, label: 'Verifying income sources' },
+      { at: 40, label: 'Assessing risk factors' },
+      { at: 65, label: 'Calculating DTI ratio' },
+      { at: 88, label: 'Cross-checking bureau data' },
+      { at: 99, label: 'Score locked in' }
+    ];
+    var SCORE_MIN = 300, SCORE_MAX = 850;
+    var DURATION = 2600;
+    var startTime = null;
+
+    function bandFor(score) {
+      if (score < 580) return 'Building file';
+      if (score < 670) return 'Fair';
+      if (score < 740) return 'Good';
+      if (score < 800) return 'Very good';
+      return 'Excellent';
+    }
+    function easeOutQuint(t) { return 1 - Math.pow(1 - t, 5); }
+
+    function tick(now) {
+      if (!startTime) startTime = now;
+      var raw = Math.min((now - startTime) / DURATION, 1);
+      var pct = easeOutQuint(raw) * 100;
+      var score = Math.round(SCORE_MIN + (pct / 100) * (SCORE_MAX - SCORE_MIN));
+
+      fillPath.style.strokeDashoffset = (100 - pct);
+      needle.setAttribute('transform', 'rotate(' + (-90 + pct * 1.8) + ' 110 118)');
+      scoreEl.textContent = score;
+      bandEl.textContent = bandFor(score);
+
+      var label = stages[0].label;
+      for (var s = 0; s < stages.length; s++) { if (pct >= stages[s].at) label = stages[s].label; }
+      statusEl.textContent = label;
+
+      if (raw < 1) {
+        requestAnimationFrame(tick);
+      } else {
+        scoreEl.textContent = SCORE_MAX;
+        bandEl.textContent = 'Excellent';
+        statusEl.textContent = 'Welcome';
+        setTimeout(function () {
+          loader.classList.add('done');
+          pageEl.classList.add('revealed');
+          sCursor.classList.add('active');
+          sRing.classList.add('active');
+        }, 480);
+      }
+    }
+    requestAnimationFrame(tick);
+  })();
+
+  /* ─── SITE CURSOR ─── */
+  (function () {
+    if (window.matchMedia && window.matchMedia('(hover: none)').matches) return;
+    var dot = document.getElementById('siteCursor');
+    var ring = document.getElementById('siteCursorRing');
+    document.addEventListener('mousemove', function (e) {
+      dot.style.left = e.clientX + 'px'; dot.style.top = e.clientY + 'px';
+      ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px';
+    });
+    document.querySelectorAll('a,button,.project-card,.skill-category,.cert-card,.edu-card').forEach(function (el) {
+      el.addEventListener('mouseenter', function () { ring.style.width = '50px'; ring.style.height = '50px'; });
+      el.addEventListener('mouseleave', function () { ring.style.width = '32px'; ring.style.height = '32px'; });
+    });
+    document.addEventListener('mousedown', function () { dot.style.transform = 'translate(-50%,-50%) scale(.6)'; });
+    document.addEventListener('mouseup', function () { dot.style.transform = 'translate(-50%,-50%) scale(1)'; });
+  })();
+
+  /* ─── NAV ─── */
+  var hamburger = document.getElementById('hamburger');
+  var navLinks = document.getElementById('navLinks');
+  hamburger.addEventListener('click', function () {
+    var open = navLinks.classList.toggle('open');
+    hamburger.classList.toggle('open', open);
+    hamburger.setAttribute('aria-expanded', open);
+  });
+  navLinks.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      navLinks.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', false);
+    });
+  });
+
+  /* ─── FADE IN ON SCROLL ─── */
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry, i) {
+      if (entry.isIntersecting) {
+        setTimeout(function () { entry.target.classList.add('visible'); }, i * 70);
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in').forEach(function (el) { io.observe(el); });
+
+  /* ─── CAROUSEL ─── */
+  class Carousel {
+    constructor(wrapper) {
+      this.wrapper = wrapper;
+      this.track = wrapper.querySelector('.carousel-track');
+      this.slides = wrapper.querySelectorAll('.carousel-slide');
+      this.dotsEl = wrapper.querySelector('.carousel-dots');
+      this.counter = wrapper.querySelector('.carousel-counter');
+      this.progress = wrapper.querySelector('.carousel-progress');
+      this.prevBtn = wrapper.querySelector('.carousel-btn.prev');
+      this.nextBtn = wrapper.querySelector('.carousel-btn.next');
+      this.total = this.slides.length;
+      this.current = 0;
+      this.delay = parseInt(wrapper.dataset.autoplay) || 4000;
+      this.timer = null;
+
+      this.dots = Array.from({ length: this.total }, (_, i) => {
+        const d = document.createElement('button');
+        d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+        d.setAttribute('aria-label', 'Slide ' + (i + 1));
+        d.addEventListener('click', () => this.goTo(i));
+        this.dotsEl.appendChild(d);
+        return d;
+      });
+
+      if (this.total <= 1) { this.prevBtn.style.display = 'none'; this.nextBtn.style.display = 'none'; }
+
+      this.prevBtn.addEventListener('click', () => this.prev());
+      this.nextBtn.addEventListener('click', () => this.next());
+
+      this.dragX = 0; this.dragDelta = 0; this.dragging = false;
+      this.track.addEventListener('mousedown', e => this.dragStart(e.clientX));
+      this.track.addEventListener('touchstart', e => this.dragStart(e.touches[0].clientX), { passive: true });
+      this.track.addEventListener('mousemove', e => this.dragMove(e.clientX));
+      this.track.addEventListener('touchmove', e => this.dragMove(e.touches[0].clientX), { passive: true });
+      this.track.addEventListener('mouseup', () => this.dragEnd());
+      this.track.addEventListener('touchend', () => this.dragEnd());
+      this.track.addEventListener('mouseleave', () => { if (this.dragging) this.dragEnd(); });
+
+      wrapper.addEventListener('mouseenter', () => this.stop());
+      wrapper.addEventListener('mouseleave', () => this.start());
+
+      this.render();
+      this.start();
+    }
+
+    goTo(i) { this.current = ((i % this.total) + this.total) % this.total; this.render(); this.restart(); }
+    prev() { this.goTo(this.current - 1); }
+    next() { this.goTo(this.current + 1); }
+
+    render() {
+      this.track.style.transform = `translateX(-${this.current * 100}%)`;
+      this.counter.textContent = `${this.current + 1} / ${this.total}`;
+      this.dots.forEach((d, i) => d.classList.toggle('active', i === this.current));
+    }
+
+    start() {
+      if (this.total <= 1) return;
+      this.stop();
+      this.progress.style.transition = 'none';
+      this.progress.style.width = '0%';
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        this.progress.style.transition = `width ${this.delay}ms linear`;
+        this.progress.style.width = '100%';
+      }));
+      this.timer = setTimeout(() => { this.next(); this.start(); }, this.delay);
+    }
+
+    stop() {
+      clearTimeout(this.timer);
+      this.progress.style.transition = 'none';
+      this.progress.style.width = '0%';
+    }
+
+    restart() { this.stop(); this.start(); }
+
+    dragStart(x) {
+      if (this.total <= 1) return;
+      this.dragging = true; this.dragX = x; this.dragDelta = 0;
+      this.track.classList.add('dragging'); this.stop();
+    }
+    dragMove(x) {
+      if (!this.dragging) return;
+      this.dragDelta = x - this.dragX;
+      const pct = (this.dragDelta / this.wrapper.offsetWidth) * 100;
+      this.track.style.transform = `translateX(calc(-${this.current * 100}% + ${pct}%))`;
+    }
+    dragEnd() {
+      if (!this.dragging) return;
+      this.dragging = false;
+      this.track.classList.remove('dragging');
+      const threshold = this.wrapper.offsetWidth * 0.2;
+      if (this.dragDelta < -threshold) this.next();
+      else if (this.dragDelta > threshold) this.prev();
+      else this.render();
+      this.start();
+    }
+  }
+
+  document.querySelectorAll('.carousel-wrapper').forEach(w => new Carousel(w));
+</script>
 </body>
 </html>
