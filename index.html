@@ -43,7 +43,7 @@
   img{ max-width:100%; display:block; }
   .tnum{ font-variant-numeric:tabular-nums; }
 
-  /* ═══════════ ENTRANCE LOADER — credit score gauge ═══════════ */
+  /* ═══════════ ENTRANCE LOADER — dashboard load gauge ═══════════ */
   #pg-loader{
     position:fixed; inset:0; z-index:9999; background:var(--bg);
     display:flex; align-items:center; justify-content:center; flex-direction:column;
@@ -69,7 +69,9 @@
   .gauge-needle{ transform-origin:110px 118px; transition:transform .05s linear; }
   .gauge-readout{ position:absolute; left:50%; bottom:6px; transform:translateX(-50%); text-align:center; width:100%; }
   .gauge-score{ font-family:'Fraunces',serif; font-size:clamp(2.6rem,9vw,3.4rem); font-weight:700; color:#fff; letter-spacing:-1px; line-height:1; }
+  .gauge-score sup{ font-size:.38em; font-weight:600; color:var(--gold); margin-left:2px; vertical-align:.6em; }
   .gauge-band{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); margin-top:2px; min-height:14px; }
+  .gauge-tick{ font-family:'IBM Plex Mono',monospace; font-size:8px; fill:var(--muted-dim); }
   .loader-status{
     font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase;
     color:var(--muted); margin-top:22px; min-height:14px; text-align:center;
@@ -287,9 +289,9 @@
   <div class="loader-corner c-bl"></div><div class="loader-corner c-br"></div>
 
   <div class="loader-inner">
-    <p class="loader-eyebrow">Compiling Profile</p>
+    <p class="loader-eyebrow">Loading Portfolio</p>
     <div class="gauge-wrap">
-      <svg viewBox="0 0 220 130">
+      <svg viewBox="0 0 220 138">
         <defs>
           <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stop-color="#c1573c"/>
@@ -301,13 +303,16 @@
         <path class="gauge-fill" id="gaugeFill" pathLength="100" d="M18,118 A92,92 0 0 1 202,118"/>
         <line class="gauge-needle" id="gaugeNeedle" x1="110" y1="118" x2="110" y2="42" stroke="#eef0f2" stroke-width="2" stroke-linecap="round" transform="rotate(-90 110 118)"/>
         <circle cx="110" cy="118" r="4.5" fill="#eef0f2"/>
+        <text class="gauge-tick" x="18" y="132" text-anchor="start">0</text>
+        <text class="gauge-tick" x="110" y="16" text-anchor="middle">50</text>
+        <text class="gauge-tick" x="202" y="132" text-anchor="end">100</text>
       </svg>
       <div class="gauge-readout">
-        <div class="gauge-score tnum" id="gaugeScore">300</div>
-        <div class="gauge-band" id="gaugeBand">Building file</div>
+        <div class="gauge-score tnum" id="gaugeScore">0<sup>%</sup></div>
+        <div class="gauge-band" id="gaugeBand">Loading</div>
       </div>
     </div>
-    <p class="loader-status" id="loaderStatus">Pulling credit file</p>
+    <p class="loader-status" id="loaderStatus">Initialising workspace</p>
   </div>
 </div>
 
@@ -630,7 +635,7 @@
 </div><!-- /#page-content -->
 
 <script>
-  /* ─── ENTRANCE LOADER — credit score gauge ─── */
+  /* ─── ENTRANCE LOADER — dashboard load gauge ─── */
   (function () {
     var loader   = document.getElementById('pg-loader');
     var fillPath = document.getElementById('gaugeFill');
@@ -653,36 +658,27 @@
     }
 
     var stages = [
-      { at: 0,  label: 'Pulling credit file' },
-      { at: 18, label: 'Verifying income sources' },
-      { at: 40, label: 'Assessing risk factors' },
-      { at: 65, label: 'Calculating DTI ratio' },
-      { at: 88, label: 'Cross-checking bureau data' },
-      { at: 99, label: 'Score locked in' }
+      { at: 0,  label: 'Initialising workspace' },
+      { at: 18, label: 'Loading project data' },
+      { at: 40, label: 'Rendering dashboards' },
+      { at: 65, label: 'Compiling certifications' },
+      { at: 88, label: 'Finalising layout' },
+      { at: 99, label: 'Ready' }
     ];
-    var SCORE_MIN = 300, SCORE_MAX = 850;
-    var DURATION = 2600;
+    var DURATION = 2400;
     var startTime = null;
 
-    function bandFor(score) {
-      if (score < 580) return 'Building file';
-      if (score < 670) return 'Fair';
-      if (score < 740) return 'Good';
-      if (score < 800) return 'Very good';
-      return 'Excellent';
-    }
     function easeOutQuint(t) { return 1 - Math.pow(1 - t, 5); }
 
     function tick(now) {
       if (!startTime) startTime = now;
       var raw = Math.min((now - startTime) / DURATION, 1);
-      var pct = easeOutQuint(raw) * 100;
-      var score = Math.round(SCORE_MIN + (pct / 100) * (SCORE_MAX - SCORE_MIN));
+      var pct = Math.round(easeOutQuint(raw) * 100);
 
       fillPath.style.strokeDashoffset = (100 - pct);
       needle.setAttribute('transform', 'rotate(' + (-90 + pct * 1.8) + ' 110 118)');
-      scoreEl.textContent = score;
-      bandEl.textContent = bandFor(score);
+      scoreEl.innerHTML = pct + '<sup>%</sup>';
+      bandEl.textContent = pct < 100 ? 'Loading' : 'Ready';
 
       var label = stages[0].label;
       for (var s = 0; s < stages.length; s++) { if (pct >= stages[s].at) label = stages[s].label; }
@@ -691,15 +687,15 @@
       if (raw < 1) {
         requestAnimationFrame(tick);
       } else {
-        scoreEl.textContent = SCORE_MAX;
-        bandEl.textContent = 'Excellent';
+        scoreEl.innerHTML = '100<sup>%</sup>';
+        bandEl.textContent = 'Ready';
         statusEl.textContent = 'Welcome';
         setTimeout(function () {
           loader.classList.add('done');
           pageEl.classList.add('revealed');
           sCursor.classList.add('active');
           sRing.classList.add('active');
-        }, 480);
+        }, 450);
       }
     }
     requestAnimationFrame(tick);
